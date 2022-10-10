@@ -7,9 +7,9 @@
     "icon": "./assets/splash.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/siku_moji.png",
       "resizeMode": "contain",
-      "backgroundColor": "#3679fe"
+      "backgroundColor": "#3A53D8"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
