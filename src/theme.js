@@ -1,5 +1,3 @@
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-
 const colors = {
   white: '#ffffff',
   black: '#000000',
@@ -12,4 +10,8 @@ const colors = {
 export const theme = {
   background: colors.white,
   text: colors.black,
+  imageBackground: colors.gray_0,
+  label: colors.gray_1,
+  inputPlaceholder: colors.gray_1,
+  inputBorder: colors.gray_1,
 };
