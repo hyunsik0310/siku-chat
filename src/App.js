@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StatusBar, Image } from 'react-native';
+import { StatusBar, Image, LogBox } from 'react-native';
 import AppLoading from 'expo-app-loading';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -7,6 +7,10 @@ import { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Navigation from './navigations';
 import { images } from './utils/Images';
+
+LogBox.ignoreLogs([
+  'expo-app-loading is deprecated in favor of expo-splash-screen:',
+]); // Ignore log notification by message
 
 const cacheImages = (images) => {
   return images.map((image) => {
