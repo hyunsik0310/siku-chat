@@ -4,6 +4,7 @@ import { Text } from 'react-native';
 import { Image, Input, Button } from '../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../utils/common';
+import { images } from '../utils/Images';
 
 const Container = styled.View`
   justify-content: center;
@@ -28,25 +29,31 @@ const Signup = () => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [photoUrl, setPhotoUrl] = useState(images.photo);
 
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
+  const didMountRef = useRef();
 
   useEffect(() => {
-    let _errorMessage = '';
-    if (!name) {
-      _errorMessage = 'Please enter your name.';
-    } else if (!validateEmail(email)) {
-      _errorMessage = 'Please verify your email';
-    } else if (password.length < 6) {
-      _errorMessage = 'The password must contain 6 characters at least';
-    } else if (!validateEmail(email)) {
-      _errorMessage = 'Passwords need to match';
+    if (didMountRef.current) {
+      let _errorMessage = '';
+      if (!name) {
+        _errorMessage = 'Please enter your name.';
+      } else if (!validateEmail(email)) {
+        _errorMessage = 'Please verify your email';
+      } else if (password.length < 6) {
+        _errorMessage = 'The password must contain 6 characters at least';
+      } else if (!validateEmail(email)) {
+        _errorMessage = 'Passwords need to match';
+      } else {
+        _errorMessage = '';
+      }
+      setErrorMessage(_errorMessage);
     } else {
-      _errorMessage = '';
+      didMountRef.current = true;
     }
-    setErrorMessage(_errorMessage);
   }, [name, email, password, passwordConfirm]);
 
   useEffect(() => {
@@ -60,7 +67,12 @@ const Signup = () => {
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
       <Container>
-        <Image rounded />
+        <Image
+          rounded
+          url={photoUrl}
+          showButton
+          onChangeImage={(url) => setPhotoUrl(url)}
+        />
         <Input
           label='Name'
           value={name}
