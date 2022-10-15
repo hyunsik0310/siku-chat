@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext } from '../contexts';
+import { ProgressContext, UserContext } from '../contexts';
 import styled from 'styled-components/native';
 import { Alert } from 'react-native';
 import { Image, Input, Button } from '../components';
@@ -25,6 +25,7 @@ const ErrorText = styled.Text`
 `;
 
 const Signup = () => {
+  const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -69,8 +70,7 @@ const Signup = () => {
     try {
       spinner.start();
       const user = await signup({ email, password, name, photoUrl });
-      console.log(user);
-      Alert.alert('Signup Success', user.email);
+      dispatch(user);
     } catch (e) {
       Alert.alert('Signup Error', e.message);
     } finally {

@@ -55,7 +55,7 @@ export const updateUserInfo = async (photo) => {
   return photoUrl;
 };
 
-export const signout = async () => {
+export const logout = async () => {
   await signOut(auth);
   return {};
 };

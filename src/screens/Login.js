@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
-import { ProgressContext } from '../contexts';
+import { ProgressContext, UserContext } from '../contexts';
 import styled from 'styled-components/native';
 import { Alert } from 'react-native';
 import { Button, Image, Input } from '../components';
@@ -30,6 +30,7 @@ const ErrorText = styled.Text`
 `;
 
 const Login = ({ navigation }) => {
+  const { dispatch } = useContext(UserContext);
   const { spinner } = useContext(ProgressContext);
   const insets = useSafeAreaInsets();
   const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ const Login = ({ navigation }) => {
     try {
       spinner.start();
       const user = await login({ email, password });
-      Alert.alert('Login Success', user.email);
+      dispatch(user);
     } catch (e) {
       Alert.alert('Login Error', e.message);
     } finally {
