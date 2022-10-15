@@ -49,7 +49,7 @@ export const getCurrentUser = () => {
   return { uid, name: displayName, email, photoUrl: photoURL };
 };
 
-export const updateUserInfo = async (photo) => {
+export const updateUserPhoto = async (photo) => {
   const photoUrl = await uploadImage(photo);
   await updateProfile(auth.currentUser, { photoUrl });
   return photoUrl;

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile, ChannelList } from '../screens';
 import { MaterialIcons } from '@expo/vector-icons';
 import { ThemeContext } from 'styled-components/native';
-import { theme } from '../theme';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +18,15 @@ const TabBarIcon = ({ focused, name }) => {
   );
 };
 
-const MainTab = () => {
+const MainTab = ({ navigation, route }) => {
+  const theme = useContext(ThemeContext);
+
+  useEffect(() => {
+    console.log(getFocusedRouteNameFromRoute(route));
+    const titles = getFocusedRouteNameFromRoute(route) || ['Channels'];
+    navigation.setOptions({ headerTitle: titles });
+  }, [route]);
+
   return (
     <Tab.Navigator
       tabBarOption={{
@@ -27,7 +35,7 @@ const MainTab = () => {
       }}
     >
       <Tab.Screen
-        name='Channel List'
+        name='Channels'
         component={ChannelList}
         options={{
           tabBarIcon: ({ focused }) =>
