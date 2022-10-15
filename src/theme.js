@@ -27,4 +27,8 @@ export const theme = {
   spinnerIndicator: colors.white,
   tabActiveColor: colors.blue,
   tabInactiveColor: colors.gray_1,
+  listBorder: colors.gray_0,
+  listTime: colors.gray_1,
+  listDescription: colors.gray_1,
+  listIcon: colors.black,
 };
