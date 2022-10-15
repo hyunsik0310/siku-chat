@@ -1,14 +1,53 @@
 import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Profile, ChannelList } from '../screens';
+import { MaterialIcons } from '@expo/vector-icons';
+import { ThemeContext } from 'styled-components/native';
+import { theme } from '../theme';
 
 const Tab = createBottomTabNavigator();
 
+const TabBarIcon = ({ focused, name }) => {
+  const theme = useContext(ThemeContext);
+  return (
+    <MaterialIcons
+      name={name}
+      size={26}
+      color={focused ? theme.tabActiveColor : theme.tabInactiveColor}
+    />
+  );
+};
+
 const MainTab = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name='Channel List' component={ChannelList} />
-      <Tab.Screen name='Profile' component={Profile} />
+    <Tab.Navigator
+      tabBarOption={{
+        activeTintColor: theme.tabActiveColor,
+        inactiveTintColor: theme.inactiveTintColor,
+      }}
+    >
+      <Tab.Screen
+        name='Channel List'
+        component={ChannelList}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            TabBarIcon({
+              focused,
+              name: focused ? 'chat-bubble' : 'chat-bubble-outline',
+            }),
+        }}
+      />
+      <Tab.Screen
+        name='Profile'
+        component={Profile}
+        options={{
+          tabBarIcon: ({ focused }) =>
+            TabBarIcon({
+              focused,
+              name: focused ? 'person' : 'person-outline',
+            }),
+        }}
+      />
     </Tab.Navigator>
   );
 };
