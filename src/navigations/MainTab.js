@@ -22,9 +22,19 @@ const MainTab = ({ navigation, route }) => {
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
-    console.log(getFocusedRouteNameFromRoute(route));
-    const titles = getFocusedRouteNameFromRoute(route) || ['Channels'];
-    navigation.setOptions({ headerTitle: titles });
+    const title = getFocusedRouteNameFromRoute(route) || ['Channels'];
+    navigation.setOptions({
+      headerTitle: title,
+      headerRight: () =>
+        title === 'Channels' && (
+          <MaterialIcons
+            name='add'
+            size={26}
+            style={{ margin: 10 }}
+            onPress={() => navigation.navigate('Channel Creation')}
+          />
+        ),
+    });
   }, [route]);
 
   return (
