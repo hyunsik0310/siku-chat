@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components/native';
 import { theme } from './theme';
 import Navigation from './navigations';
 import { images } from './utils/Images';
+import { ProgressContext, ProgressProvider } from './contexts';
 
 LogBox.ignoreLogs([
   'expo-app-loading is deprecated in favor of expo-splash-screen:',
@@ -40,8 +41,10 @@ const App = () => {
 
   return isReady ? (
     <ThemeProvider theme={theme}>
-      <StatusBar barStyle={'dark-content'} />
-      <Navigation />
+      <ProgressProvider>
+        <StatusBar barStyle={'dark-content'} />
+        <Navigation />
+      </ProgressProvider>
     </ThemeProvider>
   ) : (
     <AppLoading

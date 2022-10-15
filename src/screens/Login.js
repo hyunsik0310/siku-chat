@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { ProgressContext } from '../contexts';
 import styled from 'styled-components/native';
 import { Alert } from 'react-native';
 import { Button, Image, Input } from '../components';
@@ -29,10 +30,12 @@ const ErrorText = styled.Text`
 `;
 
 const Login = ({ navigation }) => {
+  const { spinner } = useContext(ProgressContext);
   const insets = useSafeAreaInsets();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
   const _handleEmailChange = (email) => {
     const changedEmail = removeWhitespace(email);
     setEmail(changedEmail);
@@ -46,10 +49,13 @@ const Login = ({ navigation }) => {
 
   const _handleLoginButtonPress = async () => {
     try {
+      spinner.start();
       const user = await login({ email, password });
       Alert.alert('Login Success', user.email);
     } catch (e) {
       Alert.alert('Login Error', e.message);
+    } finally {
+      spinner.stop();
     }
   };
   const passwordRef = useRef();
