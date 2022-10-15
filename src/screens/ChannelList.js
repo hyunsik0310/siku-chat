@@ -10,6 +10,7 @@ import {
   orderBy,
 } from 'firebase/firestore';
 import { app } from '../utils/firebase';
+import moment from 'moment';
 
 const Container = styled.View`
   flex: 1;
@@ -55,6 +56,12 @@ for (let idx = 0; idx < 100; idx++) {
   });
 }
 
+const getDateOrTime = (ts) => {
+  const now = moment().startOf('day');
+  const target = moment(ts).startOf('day');
+  return moment(ts).format(now.diff(target, 'days') > 0 ? 'MM/DD' : 'HH:mm');
+};
+
 const Item = React.memo(
   ({ item: { id, title, description, createAt }, onPress }) => {
     const theme = useContext(ThemeContext);
@@ -66,7 +73,7 @@ const Item = React.memo(
           <ItemTitle>{title}</ItemTitle>
           <ItemDescription>{description}</ItemDescription>
         </ItemTextContainer>
-        <ItemTime>{createAt}</ItemTime>
+        <ItemTime>{getDateOrTime(createAt)}</ItemTime>
         <MaterialIcons
           name='keyboard-arrow-right'
           size={24}
