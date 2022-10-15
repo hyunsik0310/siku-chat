@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components/native';
-import { Text } from 'react-native';
+import { Alert } from 'react-native';
 import { Image, Input, Button } from '../components';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../utils/common';
 import { images } from '../utils/Images';
+import { signup } from '../utils/firebase';
 
 const Container = styled.View`
   justify-content: center;
@@ -62,7 +63,15 @@ const Signup = () => {
     );
   }, [name, email, password, passwordConfirm, errorMessage]);
 
-  const _handleSignupButtonPress = () => {};
+  const _handleSignupButtonPress = async () => {
+    try {
+      const user = await signup({ email, password, name, photoUrl });
+      console.log(user);
+      Alert.alert('Signup Success', user.email);
+    } catch (e) {
+      Alert.alert('Signup Error', e.message);
+    }
+  };
 
   return (
     <KeyboardAwareScrollView extraScrollHeight={20}>
