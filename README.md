@@ -21,3 +21,9 @@
 - src/utils
 
 #
+
+## root폴더에 firebase.json 추가 (.gitignore에 정의가 되어 있으므로 따로 환경에서 설정)
+
+프로젝트 설정 > 일반 > 내 앱
+
+- Firebase SDK snippet

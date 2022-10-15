@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components/native';
-import { TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Alert } from 'react-native';
 import { Button, Image, Input } from '../components';
 import { images } from '../utils/Images';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { validateEmail, removeWhitespace } from '../utils/common';
+import { login } from '../utils/firebase';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { theme } from '../theme';
 
@@ -43,7 +44,14 @@ const Login = ({ navigation }) => {
     setPassword(removeWhitespace(password));
   };
 
-  const _handleLoginButtonPress = () => {};
+  const _handleLoginButtonPress = async () => {
+    try {
+      const user = await login({ email, password });
+      Alert.alert('Login Success', user.email);
+    } catch (e) {
+      Alert.alert('Login Error', e.message);
+    }
+  };
   const passwordRef = useRef();
 
   const [disabled, setDisabled] = useState(true);
