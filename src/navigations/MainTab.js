@@ -22,7 +22,7 @@ const MainTab = ({ navigation, route }) => {
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
-    const title = getFocusedRouteNameFromRoute(route) || ['Channels'];
+    const title = getFocusedRouteNameFromRoute(route) ?? 'Channels';
     navigation.setOptions({
       headerTitle: title,
       headerRight: () =>
@@ -39,9 +39,9 @@ const MainTab = ({ navigation, route }) => {
 
   return (
     <Tab.Navigator
-      tabBarOption={{
+      screenOptions={{
         activeTintColor: theme.tabActiveColor,
-        inactiveTintColor: theme.inactiveTintColor,
+        inactiveTintColor: theme.tabInactiveColor,
       }}
     >
       <Tab.Screen

@@ -4,7 +4,6 @@ import { Alert } from 'react-native';
 import { UserContext, ProgressContext } from '../contexts';
 import { logout, getCurrentUser, updateUserPhoto } from '../utils/firebase';
 import { Button, Image, Input } from '../components';
-import { theme } from '../theme';
 
 const Container = styled.View`
   flex: 1;
