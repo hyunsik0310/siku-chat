@@ -3,7 +3,12 @@ import styled, { ThemeContext } from 'styled-components/native';
 import { Alert } from 'react-native';
 import { GiftedChat, Send } from 'react-native-gifted-chat';
 import { MaterialIcons } from '@expo/vector-icons';
-import { createMessage, getCurrentUser, app } from '../utils/firebase';
+import {
+  createMessage,
+  getCurrentUser,
+  app,
+  updateChannelDate,
+} from '../utils/firebase';
 import {
   getFirestore,
   collection,
@@ -74,6 +79,7 @@ const Channel = ({ navigation, route }) => {
     const newMessage = messageList[0];
     try {
       await createMessage({ channelId: route.params.id, message: newMessage });
+      //await updateChannelDate();
     } catch (e) {
       Alert.alert('Send Message Error', e.message);
     }

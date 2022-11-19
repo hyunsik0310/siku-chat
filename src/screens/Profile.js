@@ -53,6 +53,7 @@ const Profile = () => {
         showButton
         rounded
       />
+      <Input lable='Team' value='team1' disabled />
       <Input label='name' value={user.name} disabled />
       <Input label='Email' value={user.email} disabled />
       <Button

@@ -1,3 +1,4 @@
+import { createdAt } from 'expo-updates';
 import { initializeApp } from 'firebase/app';
 import {
   getAuth,
@@ -6,7 +7,13 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-import { getFirestore, collection, doc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import config from '../../firebase.json';
 
@@ -40,10 +47,40 @@ const uploadImage = async (uri) => {
 export const signup = async ({ name, email, password, photoUrl }) => {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   const photoURL = await uploadImage(photoUrl);
+
   await updateProfile(auth.currentUser, { displayName: name, photoURL });
+  await createUserInfo2(auth.currentUser, name, email);
   return user;
 };
 
+export const createUserInfo = async (user, { name, email }) => {
+  const userInfoCollection = collection(db, 'userInfo');
+  const userInfoRef = doc(userInfoCollection);
+  const { uid } = user;
+  const authority = '0';
+  const newInfo = {
+    uid,
+    name,
+    email,
+    authority,
+    createdAt: Date.now(),
+  };
+  await setDoc(userInfoRef, newInfo);
+  return id;
+};
+
+export const createUserInfo2 = async (user, { name, email }) => {
+  const userInfoCollection = collection(db, 'userInfo');
+  const userInfoRef = doc(userInfoCollection);
+  const { uid } = user;
+
+  await setDoc(doc(userInfoRef, uid), {
+    name: name,
+    email: email,
+    team: 'team1',
+    flg: true,
+  });
+};
 export const getCurrentUser = () => {
   const { uid, displayName, email, photoURL } = auth.currentUser;
   return { uid, name: displayName, email, photoUrl: photoURL };
@@ -78,5 +115,12 @@ export const createChannel = async ({ title, description }) => {
 
 export const createMessage = async ({ channelId, message }) => {
   const docRef = doc(db, `channels/${channelId}/messages`, message._id);
+  const docChannelRef = doc(db, `channels/${channelId}/`);
+  await updateDoc(docChannelRef, { createdAt: Date.now() });
   await setDoc(docRef, { ...message, createdAt: Date.now() });
+};
+
+export const updateChannelDate = async () => {
+  const docChannelRef = doc(db, `channels`);
+  await updateDoc(docChannelRef, { createdAt: Date.now() });
 };

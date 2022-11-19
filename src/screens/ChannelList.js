@@ -3,6 +3,7 @@ import styled, { ThemeContext } from 'styled-components/native';
 import { Text, Button, FlatList } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import {
+  doc,
   getFirestore,
   collection,
   onSnapshot,
@@ -52,7 +53,7 @@ for (let idx = 0; idx < 100; idx++) {
     id: idx,
     title: `title ${idx}`,
     description: `description ${idx}`,
-    createAt: idx,
+    createdAt: idx,
   });
 }
 
@@ -63,7 +64,7 @@ const getDateOrTime = (ts) => {
 };
 
 const Item = React.memo(
-  ({ item: { id, title, description, createAt }, onPress }) => {
+  ({ item: { id, title, description, createdAt }, onPress }) => {
     const theme = useContext(ThemeContext);
     console.log(`Item: ${id}`);
 
@@ -73,7 +74,7 @@ const Item = React.memo(
           <ItemTitle>{title}</ItemTitle>
           <ItemDescription>{description}</ItemDescription>
         </ItemTextContainer>
-        <ItemTime>{getDateOrTime(createAt)}</ItemTime>
+        <ItemTime>{getDateOrTime(createdAt)}</ItemTime>
         <MaterialIcons
           name='keyboard-arrow-right'
           size={24}
