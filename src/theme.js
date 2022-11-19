@@ -7,6 +7,7 @@ const colors = {
   gray_1: '#a6a6a6',
   red: '#e84118',
   blue: '#3679fe',
+  orange: '#FF8C00',
 };
 
 export const theme = {
@@ -24,7 +25,7 @@ export const theme = {
   buttonBackground: colors.blue,
   buttonTitle: colors.white,
   buttonUnfilledTitle: colors.blue,
-  buttonLogout: colors.red,
+  buttonLogout: colors.orange,
   spinnerBackground: colors.black,
   spinnerIndicator: colors.white,
   tabActiveColor: colors.blue,

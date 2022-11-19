@@ -116,11 +116,8 @@ export const createChannel = async ({ title, description }) => {
 export const createMessage = async ({ channelId, message }) => {
   const docRef = doc(db, `channels/${channelId}/messages`, message._id);
   const docChannelRef = doc(db, `channels/${channelId}/`);
-  await updateDoc(docChannelRef, { createdAt: Date.now() });
-  await setDoc(docRef, { ...message, createdAt: Date.now() });
-};
 
-export const updateChannelDate = async () => {
-  const docChannelRef = doc(db, `channels`);
-  await updateDoc(docChannelRef, { createdAt: Date.now() });
+  let now = Date.now();
+  await updateDoc(docChannelRef, { createdAt: now });
+  await setDoc(docRef, { ...message, createdAt: now });
 };
